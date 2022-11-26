@@ -17,11 +17,13 @@ class APILoginController extends Controller
             'email' => 'required|string|email|max:255',
             'password'=> 'required',
             'code' => 'required'
+            
         ]);
         if ($validator->fails()) {
             return response()->json($validator->errors(), 401);;
         }
         $credentials = $request->only('email', 'password');
+        echo $credentials;
         try {
             if (! $token = JWTAuth::attempt($credentials)) {
                 return response()->json(['error' => 'invalid_credentials'], 401);
